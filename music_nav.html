@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>音乐导航条</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav {
+            position: absolute;
+            width: 900px;
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            background-color: black;
+        }
+        
+        .nav ul {
+            list-style: none;
+            /* overflow: hidden; */
+        }
+        
+        .nav ul li {
+            position: relative;
+            float: left;
+            width: 100px;
+            height: 30px;
+            overflow: hidden;
+        }
+        
+        .nav ul li::after {
+            clear: both;
+        }
+        
+        .nav ul li a {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            line-height: 30px;
+            color: blue;
+            font-weight: bolder;
+            text-decoration: none;
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .nav ul li span {
+            position: absolute;
+            width: 100px;
+            height: 30px;
+            background-color: yellow;
+            top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <ul>
+            <li>
+                <a href="javascript:void(0);">导航1</a>
+                <span></span>
+            </li>
+            <li>
+                <a href="javascript:void(0);">导航2</a>
+                <span></span>
+            </li>
+            <li>
+                <a href="javascript:void(0);">导航3</a>
+                <span></span>
+            </li>
+            <li>
+                <a href="javascript:void(0);">导航4</a>
+                <span></span>
+            </li>
+            <li>
+                <a href="javascript:void(0);">导航5</a>
+                <span></span>
+            </li>
+            <li>
+                <a href="javascript:void(0);">导航6</a>
+                <span></span>
+            </li>
+            <li>
+                <a href="javascript:void(0);">导航7</a>
+                <span></span>
+            </li>
+            <li>
+                <a href="javascript:void(0);">导航8</a>
+                <span></span>
+            </li>
+            <li>
+                <a href="javascript:void(0);">导航9</a>
+                <span></span>
+            </li>
+        </ul>
+        <div>
+            <audio src="./mp3/1.ogg" type="audio/ogg"></audio>
+            <audio src="./mp3/2.ogg" type="audio/ogg"></audio>
+            <audio src="./mp3/3.ogg" type="audio/ogg"></audio>
+            <audio src="./mp3/4.ogg" type="audio/ogg"></audio>
+            <audio src="./mp3/5.ogg" type="audio/ogg"></audio>
+            <audio src="./mp3/6.ogg" type="audio/ogg"></audio>
+            <audio src="./mp3/7.ogg" type="audio/ogg"></audio>
+            <audio src="./mp3/8.ogg" type="audio/ogg"></audio>
+            <audio src="./mp3/9.ogg" type="audio/ogg"></audio>
+        </div>
+    </div>
+    <script src="../jquery.js"></script>
+    <script>
+        $(function() {
+            $('li').mouseenter(function() {
+                $(this).children('span').stop().animate({
+                    // marginTop: '-30px',
+                    top: 0
+                });
+                $('audio').get($(this).index()).load();
+                $('audio').get($(this).index()).play();
+            }).mouseleave(function() {
+                $(this).children('span').stop().animate({
+                    top: '30px'
+                });
+            });
+
+            var flag = true;
+            $(document).on('keydown', function(e) {
+                if (flag) {
+                    flag = false;
+                    var code = e.keyCode;
+                    if (code >= 49 && code <= 57) {
+                        $('li').eq(code - 49).trigger('mouseenter');
+                    }
+                }
+
+                // }
+
+            });
+            $(document).on('keyup', function(e) {
+                flag = true;
+                var code = e.keyCode;
+                if (code >= 49 && code <= 57) {
+                    $('li').eq(code - 49).trigger('mouseleave');
+                }
+
+            });
+            //节流阀 按下的时候触发，没有弹起  不让触发下一次
+
+
+        })
+    </script>
+</body>
+
+</html>
